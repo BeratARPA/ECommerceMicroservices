@@ -1,28 +1,31 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/orders/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "orderapi",
           "Port": 9000
         }
       ],
       "UpstreamPathTemplate": "/orders/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/products/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "productapi",
           "Port": 9001
         }
       ],
       "UpstreamPathTemplate": "/products/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
-  ]
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:9002"
+  }
 }

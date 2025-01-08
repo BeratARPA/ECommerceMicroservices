@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  orderapi:
+    build:
+      context: .
+      dockerfile: Services/Order/Order.API/Dockerfile
+    container_name: orderapi
+    ports:
+      - "9000:9000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ECommerce_OrderDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      - ConnectionStrings__RedisConnection=redis:6379
+    depends_on:
+      - sqlserver
+      - redis
+      - rabbitmq
+
+  productapi:
+    build:
+      context: .
+      dockerfile: Services/Product/Product.API/Dockerfile
+    container_name: productapi
+    ports:
+      - "9001:9001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ECommerce_ProductDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      - ConnectionStrings__RedisConnection=redis:6379
+    depends_on:
+      - sqlserver
+      - redis
+
+  apigateway:
+    build:
+      context: .
+      dockerfile: APIGateway/Dockerfile
+    container_name: apigateway
+    ports:
+      - "42196:42196"
+    depends_on:
+      - orderapi
+      - productapi
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  sqlserver_data:

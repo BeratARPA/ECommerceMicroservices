@@ -11,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.WebHost.UseUrls("http://*:42196");
+
 builder.Services.AddOcelot();
 
 var app = builder.Build();
@@ -22,7 +24,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -3,6 +3,9 @@ using Order.Infrastructure.Interfaces;
 using Order.Infrastructure.Repositories;
 using Order.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using ECommerce.Shared.Messaging;
+using ECommerce.Shared.Events;
+using Order.Infrastructure.EventHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,14 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 // Dependency Injection
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+// HTTP Client Registration
+builder.Services.AddHttpClient<IProductHttpClient, ProductHttpClient>();
+
+// RabbitMQ Registration
+builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();
+builder.Services.AddScoped<IEventHandler<OrderCreatedEvent>, OrderCreatedEventHandler>();
+builder.Services.AddScoped<IEventHandler<OrderCancelledEvent>, OrderCancelledEventHandler>();
 
 builder.WebHost.UseUrls("http://*:9000");
 
@@ -48,7 +59,37 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
+    dbContext.Database.EnsureDeleted();
     dbContext.Database.EnsureCreated();
+}
+
+// RabbitMQ Subscription with retry logic
+var retryCount = 0;
+const int maxRetries = 5;
+
+while (retryCount < maxRetries)
+{
+    try
+    {
+        var eventBus = app.Services.GetRequiredService<IEventBus>();
+        eventBus.Subscribe<OrderCreatedEvent, OrderCreatedEventHandler>(
+            RabbitMQSettings.ExchangeName,
+            RabbitMQSettings.OrderCreatedQueueName
+        );
+
+        eventBus.Subscribe<OrderCancelledEvent, OrderCancelledEventHandler>(
+            RabbitMQSettings.ExchangeName,
+            RabbitMQSettings.OrderCancelledQueueName
+        );
+        break;
+    }
+    catch
+    {
+        retryCount++;
+        if (retryCount == maxRetries)
+            throw;
+        Thread.Sleep(5000); // 5 saniye bekle
+    }
 }
 
 app.Run();
