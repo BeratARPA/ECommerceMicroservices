@@ -40,17 +40,17 @@ Base URL: `http://localhost:42196/products`
 
 1. **Tüm Ürünleri Listele**
    ```
-   GET /products
+   GET /product
    ```
 
 2. **Ürün Detayı**
    ```
-   GET /products/{id}
+   GET /product/{id}
    ```
 
 3. **Yeni Ürün Ekle**
    ```
-   POST /products
+   POST /product
    ```
    Request Body:
    ```json
@@ -63,7 +63,7 @@ Base URL: `http://localhost:42196/products`
 
 4. **Stok Güncelle**
    ```
-   PUT /products/{id}
+   PUT /product/{id}
    ```
    Request Body:
    ```json
@@ -74,7 +74,7 @@ Base URL: `http://localhost:42196/products`
 
 5. **Ürün Sil**
    ```
-   DELETE /products/{id}
+   DELETE /product/{id}
    ```
 
 ### Sipariş Servisi (Order API)
@@ -85,17 +85,17 @@ Base URL: `http://localhost:42196/orders`
 
 1. **Tüm Siparişleri Listele**
    ```
-   GET /orders
+   GET /order
    ```
 
 2. **Sipariş Detayı**
    ```
-   GET /orders/{id}
+   GET /order/{id}
    ```
 
 3. **Yeni Sipariş Oluştur**
    ```
-   POST /orders
+   POST /order
    ```
    Request Body:
    ```json
@@ -107,7 +107,7 @@ Base URL: `http://localhost:42196/orders`
 
 4. **Sipariş İptal**
    ```
-   DELETE /orders/{id}
+   DELETE /order/{id}
    ```
 
 ## Özellikler
