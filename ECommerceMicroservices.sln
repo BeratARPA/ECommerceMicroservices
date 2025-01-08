@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Tests", "Services\Order\Order.Tests\Order.Tests.csproj", "{62CE4CD4-CFC7-4DE4-A50E-ACF450F2957C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{23F34CB4-9C91-4CE6-84B9-735BDBCA3A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23F34CB4-9C91-4CE6-84B9-735BDBCA3A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23F34CB4-9C91-4CE6-84B9-735BDBCA3A9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62CE4CD4-CFC7-4DE4-A50E-ACF450F2957C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62CE4CD4-CFC7-4DE4-A50E-ACF450F2957C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62CE4CD4-CFC7-4DE4-A50E-ACF450F2957C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62CE4CD4-CFC7-4DE4-A50E-ACF450F2957C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +87,6 @@ Global
 		{380EA988-865A-4B8B-B13F-7A7F43F27F1D} = {E290F0F7-0C54-4B08-9286-7968FD954D18}
 		{BB6CA64A-1EF5-426F-AF85-A2A27CEBC305} = {1077C660-02C4-46C9-A38F-0B0E6193BC29}
 		{AD17EE19-30F3-4222-AE4B-DBF43920C36A} = {1077C660-02C4-46C9-A38F-0B0E6193BC29}
+		{62CE4CD4-CFC7-4DE4-A50E-ACF450F2957C} = {E290F0F7-0C54-4B08-9286-7968FD954D18}
 	EndGlobalSection
 EndGlobal
